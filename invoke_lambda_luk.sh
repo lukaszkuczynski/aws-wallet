@@ -1,0 +1,1 @@
+./invoke_lambda.sh default
