@@ -2,4 +2,3 @@
 deploy_lambda_luk.sh
 wallet.zip
 aws_output.txt
-invoke_lambda_luk.sh
