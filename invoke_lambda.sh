@@ -5,7 +5,7 @@ aws lambda invoke \
 --function-name HelloAws \
 --region eu-central-1 \
 --log-type Tail \
---payload '{"first_name":"Lukasz", "last_name":"Kuczyński"}' \
+--payload '{"op_type":"spending", "amount": 20, "description":"jajka"}' \
 --profile $AWS_USER \
 aws_output.txt
 

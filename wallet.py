@@ -1,5 +1,8 @@
 import boto3
 from decimal import Decimal
+import uuid
+
+
 
 def last_record():
     return {
@@ -20,7 +23,8 @@ def get_new_record(amount, description):
 
 def save(new_record):
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('operations')
+    table = dynamodb.Table('operation')
+    new_record['OperationId'] = str(uuid.uuid4())[0:6]
     item = new_record
     table.put_item(
         Item = item
