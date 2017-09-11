@@ -1,7 +1,7 @@
 import boto3
 from decimal import Decimal
 import uuid
-
+from datetime import datetime
 
 
 def last_record():
@@ -16,7 +16,8 @@ def get_new_record(amount, description):
     after = last['amount_after'] - amount
     new_record = {
         "amount_after": Decimal(str(after)),
-        "description": description
+        "description": description,
+        "timestamp": datetime.strftime(datetime.now(), '%Y-%m-%d_%H:%M:%S')
     }
     return new_record
 
