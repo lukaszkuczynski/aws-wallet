@@ -1,3 +1,6 @@
+import boto3
+from decimal import Decimal
+
 def last_record():
     return {
         "amount_after": 100,
@@ -7,15 +10,21 @@ def last_record():
 
 def get_new_record(amount, description):
     last = last_record()
+    after = last['amount_after'] - amount
     new_record = {
-        "amount_after": last['amount_after'] - amount,
+        "amount_after": Decimal(str(after)),
         "description": description
     }
     return new_record
 
 
 def save(new_record):
-    print("Save not yet implemented")
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('operations')
+    item = new_record
+    table.put_item(
+        Item = item
+    )
 
 
 def my_handler(event, context):
