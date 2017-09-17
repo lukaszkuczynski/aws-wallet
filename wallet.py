@@ -2,18 +2,31 @@ import boto3
 from decimal import Decimal
 import uuid
 from datetime import datetime
-
+s3_client = boto3.client('s3')
+BUCKET_NAME = 'luk-thoughts'
+import json
 
 def last_record():
-    return {
-        "amount_after": 100,
-        "difference": -20,
-        "description": "bread"
-    }
+    s3 = boto3.resource('s3')
+
+    obj = s3.Object(BUCKET_NAME, 'last')
+    last_text = obj.get()['Body'].read().decode('utf-8')
+    if last_text:
+        last = json.loads(last_text)
+        last['amount_after'] = Decimal(last['amount_after'])
+        return last
+    else:
+        return {
+            "amount_after": 100,
+            "difference": -20,
+            "description": "bread"
+        }
 
 def get_new_record(amount, description):
+
+
     last = last_record()
-    after = last['amount_after'] - amount
+    after = last['amount_after'] - Decimal(amount)
     new_record = {
         "amount_after": Decimal(str(after)),
         "description": description,
@@ -29,6 +42,13 @@ def save(new_record):
     item = new_record
     table.put_item(
         Item = item
+    )
+    new_record['amount_after'] = str(new_record['amount_after'])
+    jsoned = json.dumps(new_record)
+    s3_client.put_object(
+        Bucket = BUCKET_NAME,
+        Key = 'last',
+        Body = jsoned
     )
 
 
