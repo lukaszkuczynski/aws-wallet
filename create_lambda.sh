@@ -6,4 +6,5 @@ aws lambda create-function \
 --handler wallet.my_handler \
 --runtime python3.6 \
 --timeout 15 \
---memory-size 512
+--memory-size 512 \
+--environment Variables={ES_HOST=$3}

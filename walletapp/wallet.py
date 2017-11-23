@@ -5,6 +5,9 @@ from datetime import datetime
 s3_client = boto3.client('s3')
 BUCKET_NAME = 'luk-thoughts'
 import json
+import certifi
+from elasticsearch import Elasticsearch
+import os
 
 def last_record():
     s3 = boto3.resource('s3')
@@ -50,6 +53,13 @@ def save(new_record):
         Key = 'last',
         Body = jsoned
     )
+    index_es(jsoned)
+
+
+def index_es(doc):
+    host = os.environ['ES_HOST']
+    es = Elasticsearch(hosts=[host], use_ssl=True, ca_certs=certifi.where())
+    es.index('wallet', 'spending', doc)
 
 
 def my_handler(event, context):

@@ -1,4 +1,4 @@
 .idea
 deploy_lambda_luk.sh
-wallet.zip
+*.zip
 aws_output.txt
