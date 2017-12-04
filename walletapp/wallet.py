@@ -26,11 +26,10 @@ def last_record():
         }
 
 def get_new_record(amount, description):
-
-
     last = last_record()
     after = last['amount_after'] - Decimal(amount)
     new_record = {
+        "amount": str(amount),
         "amount_after": Decimal(str(after)),
         "description": description,
         "timestamp": datetime.strftime(datetime.now(), '%Y-%m-%d_%H:%M:%S')
