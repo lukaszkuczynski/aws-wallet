@@ -1,0 +1,26 @@
+DELETE wallet2
+PUT wallet2
+{
+  "mappings": {
+    
+    "spending": {
+      "properties": {
+        "amount": { 
+          "type": "float"
+        },
+        "amount_after": {
+          "type": "float"
+        },
+        "OperationId": {
+          "type": "keyword"
+        },
+        "timestamp": {
+          "type": "date",
+          "format": "basic_date_time_no_millis"
+        }
+        
+      }
+
+    }
+  }
+}

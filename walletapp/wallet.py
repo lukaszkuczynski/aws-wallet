@@ -32,7 +32,7 @@ def get_new_record(amount, description):
         "amount": str(amount),
         "amount_after": Decimal(str(after)),
         "description": description,
-        "timestamp": datetime.strftime(datetime.now(), '%Y-%m-%d_%H:%M:%S')
+        "timestamp": datetime.strftime(datetime.now(), '%Y%m%dT%H%M%S'+'+0100')
     }
     return new_record
 
@@ -58,7 +58,7 @@ def save(new_record):
 def index_es(doc):
     host = os.environ['ES_HOST']
     es = Elasticsearch(hosts=[host], use_ssl=True, ca_certs=certifi.where())
-    es.index('wallet', 'spending', doc)
+    es.index('wallet2', 'spending', doc)
 
 
 def my_handler(event, context):
